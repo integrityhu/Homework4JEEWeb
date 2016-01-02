@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>List load</h1>
+        <pe:ajaxErrorHandler id="global" />
+		<p:growl id="growl" showSummary="true" showDetail="true" sticky="true" />
+        
+        <h:form id="listForm">
+            <p:commandButton action="#{fileInfoListBean.loadFileInfoList()}" value="Frissítés" update=":listForm:dataTable"/>            
+            <p:dataTable id="dataTable" var="item" value="#{fileInfoListBean.fileInfoList}"
+                styleClass="simpletablestyle" widgetVar="fileInfoListWidget"
+                filteredValue="#{fileInfoListBean.filteredFileInfoList}"
+                paginator="true" rows="5" emptyMessage="Nincs felteltött fájl"
+                paginatorPosition="bottom" paginatorAlwaysVisible="false"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15" lazy="false">
+                <f:facet name="header">  
+		            <p:outputPanel>
+		                <h:outputText value="fájl lista"/><br/>
+		                <h:outputText value="Keresés az összes mezőben:" />  
+		                <p:inputText id="globalFilter" onkeyup="fileInfoListWidget.filter()" style="width:150px" />  
+		            </p:outputPanel>  
+                </f:facet>
+                
+                <p:column id="buttons" styleClass="center-column">
+                    <p:commandButton id="dataset_edit" icon="ui-icon-pencil"
+                        title="szerkeszt" styleClass="smallbutton">
+                    </p:commandButton>
+                    <p:spacer width="15" />
+                    <p:commandButton id="records_button" icon="ui-icon-folder-open"
+                        title="részletek" styleClass="smallbutton">
+                    </p:commandButton>
+                    <p:spacer width="15" />
+                    <p:commandButton icon="ui-icon-trash" 
+                        title="törlés" styleClass="smallbutton">
+                    </p:commandButton>
+                </p:column>
+                
+                <p:column filterBy="#{item.uploadFileName}" filterMatchMode="contains" sortBy="#{item.uploadFileName}">
+                    <f:facet name="header">
+                        <h:outputText value="File név" />
+                    </f:facet>
+                    <h:outputText value="#{item.uploadFileName}" />
+                </p:column>
+
+                <p:column filterBy="#{item.getSizeForHumanReader()}" filterMatchMode="contains" sortBy="#{item.getSizeForHumanReader()}">
+                    <f:facet name="header">
+                        <h:outputText value="File méret" />
+                    </f:facet>
+                    <h:outputText value="#{item.getSizeForHumanReader()}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+	</ui:define>
+</ui:composition>

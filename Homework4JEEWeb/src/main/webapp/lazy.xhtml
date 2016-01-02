@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Lazy Load</h1>
+        <pe:ajaxErrorHandler id="global" />
+		<p:growl id="growl" showSummary="true" showDetail="true" sticky="true" />
+
+        <h:form id="lazyForm">            
+            <p:dataTable var="item" value="#{fileInfoLazyBean.lazyDataModel}"
+                styleClass="simpletablestyle"
+                paginator="true" rows="5" emptyMessage="Nincs felteltött fájl"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15" lazy="true">
+                <f:facet name="header">  
+            fájl lista  
+                    </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="File név" />
+                    </f:facet>
+                    <h:outputText value="#{item.uploadFileName}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="File méret" />
+                    </f:facet>
+                    <h:outputText value="#{item.getSizeForHumanReader()}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+	</ui:define>
+</ui:composition>

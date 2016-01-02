@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Simple JSF table</h1>
+        <pe:ajaxErrorHandler id="global" />
+		<p:growl id="growl" showSummary="true" showDetail="true" sticky="true" />
+        
+        <h:form id="listForm">
+            <table border="1">
+            <thead><tr><th>Upload FileName</th><th>Size</th><th>upload Date</th></tr></thead>
+            <ui:repeat value="#{fileInfoListBean.fileInfoList}" var="item">
+              <tr>
+                <td>#{item.uploadFileName}</td>
+                <td>#{item.size}</td>
+                <td>#{item.uploadDate}</td>
+              </tr>
+            </ui:repeat>
+            </table>     
+        </h:form>
+        
+	</ui:define>
+</ui:composition>

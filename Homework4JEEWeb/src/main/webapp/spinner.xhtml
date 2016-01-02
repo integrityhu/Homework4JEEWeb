@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Spinner</h1>
+        <pe:ajaxErrorHandler id="global" />
+		<p:growl id="growl" showSummary="true" showDetail="true" sticky="true" />
+
+        <h:form>            
+            <h:outputLabel for="prefix" value="Prefix: " />  
+            <p:spinner id="prefix" value="0" prefix="$" min="0" />  
+        </h:form>
+	</ui:define>
+</ui:composition>
